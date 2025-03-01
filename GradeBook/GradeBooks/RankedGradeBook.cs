@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace GradeBook.GradeBooks
@@ -17,7 +18,7 @@ namespace GradeBook.GradeBooks
         public override char GetLetterGrade(double averageGrade)
         {
             if (Students.Count < 5)
-                throw new InvalidOperationException("At least 5 students are required.");
+                throw new InvalidOperationException("Ranked grading requires at least 5 students.");
 
             var sortedGrades = Students.Select(s => s.AverageGrade).OrderByDescending(g => g).ToList();   //sorts grades in descending order
 
@@ -47,6 +48,19 @@ namespace GradeBook.GradeBooks
            
         }
 
+
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students.");
+
+            }
+            else
+            {
+                base.CalculateStatistics();
+            }
+        }
     }
 
 }
